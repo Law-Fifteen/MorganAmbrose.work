@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Award, BarChart3, Target, Phone, Wifi, Video } from 'lucide-react';
+import { Award, BarChart3, Smartphone, Phone, Wifi, Video } from 'lucide-react';
 
 interface CategoryRank {
   category: string;
@@ -36,7 +36,7 @@ const ytdData = {
 
 const categoryRanks: CategoryRank[] = [
   { category: 'Overall', rank: 7, icon: <Award size={20} />, value: 'Top 2%' },
-  { category: 'Mobile Yield', rank: 6, icon: <Target size={20} />, value: '14.5%' },
+  { category: 'Mobile Yield', rank: 6, icon: <Smartphone size={20} />, value: '14.5%' },
   { category: 'Internet Yield', rank: 8, icon: <Wifi size={20} />, value: '15.0%' },
   { category: 'Video PSU', rank: 12, icon: <Video size={20} />, value: '18.2%' },
   { category: 'Calls Handled', rank: 15, icon: <Phone size={20} />, value: '32,488' }
@@ -62,6 +62,17 @@ export default function PerformanceCard() {
 
   const topPerformances = monthlyData.filter(m => m.overallRank <= 10).length;
   const bestMonth = monthlyData.reduce((best, current) => current.overallRank < best.overallRank ? current : best);
+  
+  // Calculate total metrics in top 10 across all categories
+  const totalMetricsInTop10 = monthlyData.reduce((total, month) => {
+    let monthTop10s = 0;
+    if (month.overallRank <= 10) monthTop10s++;
+    if (month.callsRank <= 10) monthTop10s++;
+    if (month.mobileRank <= 10) monthTop10s++;
+    if (month.internetRank <= 10) monthTop10s++;
+    if (month.videoRank <= 10) monthTop10s++;
+    return total + monthTop10s;
+  }, 0);
 
   return (
     <div className="bg-gradient-to-br from-primary-50 dark:from-primary-900/20 to-secondary-50 dark:to-secondary-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-8 mb-8">
@@ -105,27 +116,35 @@ export default function PerformanceCard() {
       {viewMode === 'YTD' ? (
         <>
           {/* Category Rankings Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
             {categoryRanks.map((cat) => (
               <div key={cat.category} className="bg-white dark:bg-slate-800 rounded-xl p-4 border-2 border-slate-200 dark:border-slate-700">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-3">
                   <div className="text-primary-600">{cat.icon}</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400">{cat.category}</div>
+                  <div className="text-sm font-medium text-slate-700 dark:text-slate-300">{cat.category}</div>
                 </div>
-                <div className={`text-3xl font-bold ${cat.rank <= 10 ? 'text-green-600' : 'text-slate-900 dark:text-white'}`}>
-                  #{cat.rank}
+                <div className="flex items-center justify-between">
+                  <span className="text-lg text-slate-600 dark:text-slate-400">{cat.value}</span>
+                  <span className={`text-2xl font-bold ${cat.rank <= 10 ? 'text-green-600' : 'text-slate-900 dark:text-white'}`}>
+                    #{cat.rank} <span className="text-sm font-normal text-slate-400">of 380</span>
+                  </span>
                 </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">{cat.value}</div>
               </div>
             ))}
           </div>
 
           {/* Highlight Stats */}
-          <div className="grid grid-cols-2 gap-4 mb-8">
+          <div className="grid grid-cols-3 gap-4 mb-8">
             <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
               <div className="text-sm text-slate-500 dark:text-slate-400 mb-1">Top 10 Months</div>
               <div className="text-4xl font-bold text-green-600">{topPerformances}</div>
               <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">of 12 months in Overall Rank</div>
+            </div>
+            
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+              <div className="text-sm text-slate-500 dark:text-slate-400 mb-1">Metrics in Top 10</div>
+              <div className="text-4xl font-bold text-green-600">{totalMetricsInTop10}</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">of 60 possible (5 categories × 12 months)</div>
             </div>
             
             <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
@@ -135,30 +154,6 @@ export default function PerformanceCard() {
             </div>
           </div>
 
-          {/* Category Breakdown */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <BarChart3 size={20} className="text-primary-600" />
-              YTD Rankings by Category
-            </h3>
-            <div className="space-y-3">
-              {categoryRanks.map((cat) => (
-                <div key={cat.category} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="text-primary-600">{cat.icon}</div>
-                    <span className="text-slate-700 dark:text-slate-300">{cat.category}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm text-slate-500 dark:text-slate-400">{cat.value}</span>
-                    <span className={`text-xl font-bold ${cat.rank <= 10 ? 'text-green-600' : 'text-slate-900 dark:text-white'}`}>
-                      #{cat.rank}
-                    </span>
-                    <span className="text-xs text-slate-400">of 380</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </>
       ) : (
         <>
@@ -177,42 +172,59 @@ export default function PerformanceCard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {monthlyData.map((month) => (
-                    <tr key={month.month} className={`border-b border-slate-100 dark:border-slate-800 ${month.overallRank <= 10 ? 'bg-green-50 dark:bg-green-900/20' : ''}`}>
-                      <td className="p-4">
-                        <span className="font-medium text-slate-900 dark:text-white">{month.month}</span>
-                        {month.overallRank <= 3 && <span className="ml-2 text-yellow-500">★</span>}
-                      </td>
-                      <td className={`p-4 text-center font-bold ${month.overallRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>
-                        #{month.overallRank}
-                      </td>
-                      <td className="p-4 text-center">
-                        <div className={`font-bold ${month.callsRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>#{month.callsRank}</div>
-                        <div className="text-xs text-slate-500">{month.callsHandled.toLocaleString()}</div>
-                      </td>
-                      <td className="p-4 text-center">
-                        <div className={`font-bold ${month.mobileRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>#{month.mobileRank}</div>
-                        <div className="text-xs text-slate-500">{month.mobileYield}</div>
-                      </td>
-                      <td className="p-4 text-center">
-                        <div className={`font-bold ${month.internetRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>#{month.internetRank}</div>
-                        <div className="text-xs text-slate-500">{month.internetYield}</div>
-                      </td>
-                      <td className="p-4 text-center">
-                        <div className={`font-bold ${month.videoRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>#{month.videoRank}</div>
-                        <div className="text-xs text-slate-500">{month.videoYield}</div>
-                      </td>
-                    </tr>
-                  ))}
+                  {monthlyData.map((month) => {
+                    const hasAnyTop10 = month.overallRank <= 10 || month.callsRank <= 10 || month.mobileRank <= 10 || month.internetRank <= 10 || month.videoRank <= 10;
+                    return (
+                      <tr key={month.month} className={`border-b border-slate-100 dark:border-slate-800 ${hasAnyTop10 ? 'bg-green-50 dark:bg-green-900/20' : ''}`}>
+                        <td className="p-4">
+                          <span className="font-medium text-slate-900 dark:text-white">{month.month}</span>
+                        </td>
+                        <td className="p-4 text-center">
+                          <span className={`font-bold ${month.overallRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>
+                            #{month.overallRank}
+                            {month.overallRank <= 3 && <span className="ml-1 text-yellow-500">★</span>}
+                          </span>
+                        </td>
+                        <td className="p-4 text-center">
+                          <span className={`font-bold ${month.callsRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>
+                            #{month.callsRank}
+                            {month.callsRank <= 3 && <span className="ml-1 text-yellow-500">★</span>}
+                          </span>
+                          <div className="text-xs text-slate-500">{month.callsHandled.toLocaleString()}</div>
+                        </td>
+                        <td className="p-4 text-center">
+                          <span className={`font-bold ${month.mobileRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>
+                            #{month.mobileRank}
+                            {month.mobileRank <= 3 && <span className="ml-1 text-yellow-500">★</span>}
+                          </span>
+                          <div className="text-xs text-slate-500">{month.mobileYield}</div>
+                        </td>
+                        <td className="p-4 text-center">
+                          <span className={`font-bold ${month.internetRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>
+                            #{month.internetRank}
+                            {month.internetRank <= 3 && <span className="ml-1 text-yellow-500">★</span>}
+                          </span>
+                          <div className="text-xs text-slate-500">{month.internetYield}</div>
+                        </td>
+                        <td className="p-4 text-center">
+                          <span className={`font-bold ${month.videoRank <= 10 ? 'text-green-600' : 'text-slate-700 dark:text-slate-300'}`}>
+                            #{month.videoRank}
+                            {month.videoRank <= 3 && <span className="ml-1 text-yellow-500">★</span>}
+                          </span>
+                          <div className="text-xs text-slate-500">{month.videoYield}</div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
           </div>
           
           <div className="mt-4 text-sm text-slate-600 dark:text-slate-400">
-            <span className="inline-flex items-center gap-1"><span className="text-yellow-500">★</span> Top 3 overall performance</span>
-            <span className="inline-flex items-center gap-1 ml-4"><span className="w-3 h-3 bg-green-50 dark:bg-green-900/20 border border-green-200 inline-block"></span> Top 10 overall ranking</span>
-            <span className="inline-flex items-center gap-1 ml-4 text-slate-500">Green numbers = Top 10 in that category</span>
+            <span className="inline-flex items-center gap-1"><span className="text-yellow-500">★</span> Top 3 in any category</span>
+            <span className="inline-flex items-center gap-1 ml-4"><span className="w-3 h-3 bg-green-50 dark:bg-green-900/20 border border-green-200 inline-block"></span> Top 10 in any category</span>
+            <span className="inline-flex items-center gap-1 ml-4 text-slate-500">Green numbers = Top 10</span>
           </div>
         </>
       )}
