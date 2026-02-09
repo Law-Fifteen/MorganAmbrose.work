@@ -157,7 +157,7 @@ export default function ProfessionalProjectsCards({ projects }: ProfessionalProj
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
               {filteredProjects.map((project) => {
-                const isExpanded = expandedCards[project.id];
+                const isExpanded = carouselMode || expandedCards[project.id];
                 
                 return (
                   <div
