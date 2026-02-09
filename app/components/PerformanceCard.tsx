@@ -38,7 +38,7 @@ const categoryRanks: CategoryRank[] = [
   { category: 'Overall', rank: 7, icon: <Award size={20} />, value: 'Top 2%' },
   { category: 'Mobile Yield', rank: 6, icon: <Smartphone size={20} />, value: '14.5%' },
   { category: 'Internet Yield', rank: 8, icon: <Wifi size={20} />, value: '15.0%' },
-  { category: 'Video PSU', rank: 12, icon: <Video size={20} />, value: '18.2%' },
+  { category: 'Video Yield', rank: 12, icon: <Video size={20} />, value: '18.2%' },
   { category: 'Calls Handled', rank: 15, icon: <Phone size={20} />, value: '32,488' }
 ];
 

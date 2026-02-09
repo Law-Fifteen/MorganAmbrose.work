@@ -66,3 +66,39 @@
     @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+
+@keyframes rotateGlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sweepGlow {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.hero-button {
+  box-shadow: 0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16);
+}
+
+.hero-button:hover {
+  box-shadow: 0 0 15px rgba(59,130,246,0.64), 0 0 30px rgba(59,130,246,0.32);
+  background-color: #2374c9 !important;
+}
+
+.glow-ring {
+  background: rgba(35,116,201,0.75);
+}
+
+.hero-button {
+  background-color: #943bd0 !important;
+  background-image: none !important;
+}
