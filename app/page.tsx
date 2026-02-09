@@ -2,8 +2,9 @@ import React from 'react';
 import { professionalProjects, techProjects, summary } from './data';
 import ProfessionalProjectsTable from './components/ProfessionalProjectsTable';
 import TechProjectsTable from './components/TechProjectsTable';
+import PerformanceCard from './components/PerformanceCard';
 import ThemeToggle from './components/ThemeToggle';
-import { Briefcase, Code2, User, Mail, ArrowRight, Phone } from 'lucide-react';
+import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -54,30 +55,30 @@ export default function Home() {
                 <span className="text-sm text-slate-700 dark:text-slate-300">Open to Opportunities</span>
               </div>
               
-              <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-                Building High-Performing
-                <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"> Teams & Systems</span>
+              <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+                Results are earned,<br />
+                <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Not left to chance</span>
               </h1>
               
-              <p className="text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                Sales and Operations Leader with a proven record in competitive, regulated environments. 
-                I turn strategy into consistent, meaningful execution.
+              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-4xl mx-auto">
+                I enable teams to perform at their peak, even under pressure.<br />
+                Let's work together to strengthen operations and accelerate performance.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href="#professional" 
-                  className="inline-flex items-center justify-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-700 transition-all hover:scale-105"
+                <a
+                  href="#professional"
+                  className="inline-flex items-center justify-center gap-2 border-2 border-primary-600 text-primary-600 dark:text-primary-400 dark:border-primary-400 px-8 py-4 rounded-xl font-semibold hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all"
                 >
-                  View My Work
+                  View my Impact
                   <ArrowRight size={20} />
                 </a>
-                <a 
-                  href="tel:+13134667426" 
-                  className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-8 py-4 rounded-xl font-semibold border-2 border-slate-200 dark:border-slate-700 hover:border-primary-600 dark:hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-700 transition-all hover:scale-105"
                 >
-                  <Phone size={20} />
-                  Contact Me Now
+                  Connect with me for results
+                  <ArrowRight size={20} />
                 </a>
               </div>
             </div>
@@ -93,7 +94,7 @@ export default function Home() {
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">About Me</h2>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-8 items-start">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="space-y-6">
                   <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg">
                     <img 
@@ -108,37 +109,37 @@ export default function Home() {
                   <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                     {summary}
                   </p>
-                  
-                  <div className="bg-gradient-to-br from-primary-50 dark:from-primary-900/20 to-secondary-50 dark:to-secondary-900/20 p-8 rounded-2xl border border-primary-100 dark:border-primary-800">
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Key Highlights</h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">1</span>
-                        </div>
-                        <span className="text-slate-700 dark:text-slate-300">Led team of 24 to top 10 enterprise ranking (14 of 16 months)</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">2</span>
-                        </div>
-                        <span className="text-slate-700 dark:text-slate-300">Managed $8M+ in revenue retention through crisis management</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">3</span>
-                        </div>
-                        <span className="text-slate-700 dark:text-slate-300">Built AI-driven tools accelerating sales decision cycles</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">4</span>
-                        </div>
-                        <span className="text-slate-700 dark:text-slate-300">Created training programs resulting in $2.66M average ARR growth</span>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
+              </div>
+              
+              <div className="mt-8 bg-gradient-to-br from-primary-50 dark:from-primary-900/20 to-secondary-50 dark:to-secondary-900/20 p-8 rounded-2xl border border-primary-100 dark:border-primary-800 mx-0">
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Key Highlights</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">1</span>
+                    </div>
+                    <span className="text-slate-700 dark:text-slate-300">Led team of 24 to top 10 enterprise ranking (14 of 16 months)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">2</span>
+                    </div>
+                    <span className="text-slate-700 dark:text-slate-300">Managed $8M+ in revenue retention through crisis management</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">3</span>
+                    </div>
+                    <span className="text-slate-700 dark:text-slate-300">Built AI-driven tools accelerating sales decision cycles</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">4</span>
+                    </div>
+                    <span className="text-slate-700 dark:text-slate-300">Created training programs resulting in $2.66M average ARR growth</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -155,6 +156,10 @@ export default function Home() {
               <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl">
                 Key initiatives and achievements from my career in sales leadership, operations, and team development across the last decade.
               </p>
+              
+              {/* Performance Card - Full Width Featured */}
+              <PerformanceCard />
+              
               <ProfessionalProjectsTable projects={professionalProjects} />
             </div>
           </div>
@@ -231,6 +236,22 @@ export default function Home() {
                 >
                   <Mail size={20} />
                   Send Email
+                </a>
+                <a 
+                  href="https://calendly.com/morganambrose/new-meeting"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition-all"
+                >
+                  <Calendar size={20} />
+                  Schedule a Meeting
+                </a>
+                <a 
+                  href="tel:+13134667426" 
+                  className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition-all"
+                >
+                  <Phone size={20} />
+                  Contact Me Now
                 </a>
               </div>
               
