@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Project } from '../types';
-import { Search, ChevronDown, ChevronUp, Building2, Calendar, Target } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, Building2, Calendar, Target, ChevronLeft, ChevronRight, LayoutGrid, GalleryHorizontal } from 'lucide-react';
 
 interface ProfessionalProjectsCardsProps {
   projects: Project[];
@@ -11,6 +11,10 @@ interface ProfessionalProjectsCardsProps {
 export default function ProfessionalProjectsCards({ projects }: ProfessionalProjectsCardsProps) {
   const [globalFilter, setGlobalFilter] = useState('');
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
+  const [carouselMode, setCarouselMode] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [userInteracted, setUserInteracted] = useState(false);
+  const autoRotateRef = useRef<NodeJS.Timeout | null>(null);
 
   const filteredProjects = projects.filter(project =>
     project.title.toLowerCase().includes(globalFilter.toLowerCase()) ||
@@ -26,9 +30,74 @@ export default function ProfessionalProjectsCards({ projects }: ProfessionalProj
     }));
   }
 
+  // Touch/swipe state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    if (carouselMode && !userInteracted && filteredProjects.length > 1) {
+      autoRotateRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % filteredProjects.length);
+      }, 15000);
+    }
+
+    return () => {
+      if (autoRotateRef.current) {
+        clearInterval(autoRotateRef.current);
+      }
+    };
+  }, [carouselMode, userInteracted, filteredProjects.length]);
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentSlide(index);
+    setUserInteracted(true);
+    if (autoRotateRef.current) {
+      clearInterval(autoRotateRef.current);
+    }
+  }, []);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % filteredProjects.length);
+    setUserInteracted(true);
+    if (autoRotateRef.current) {
+      clearInterval(autoRotateRef.current);
+    }
+  }, [filteredProjects.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
+    setUserInteracted(true);
+    if (autoRotateRef.current) {
+      clearInterval(autoRotateRef.current);
+    }
+  }, [filteredProjects.length]);
+
   return (
     <div className="space-y-6">
-      {/* Search */}
+      {/* Search and View Toggle */}
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
@@ -40,87 +109,240 @@ export default function ProfessionalProjectsCards({ projects }: ProfessionalProj
             className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
           />
         </div>
-        <div className="text-sm text-slate-500 dark:text-slate-400">
-          {filteredProjects.length} of {projects.length} projects
+        <div className="flex items-center gap-4">
+          <label className="flex items-center gap-2 cursor-pointer text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+            <input
+              type="checkbox"
+              checked={carouselMode}
+              onChange={(e) => {
+                setCarouselMode(e.target.checked);
+                setCurrentSlide(0);
+                setUserInteracted(false);
+              }}
+              className="w-4 h-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+            />
+            <GalleryHorizontal size={16} />
+            View in Carousel Mode
+          </label>
+          <div className="text-sm text-slate-500 dark:text-slate-400">
+            {filteredProjects.length} of {projects.length} projects
+          </div>
         </div>
       </div>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredProjects.map((project) => {
-          const isExpanded = expandedCards[project.id];
-          
-          return (
-            <div
-              key={project.id}
-              className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all overflow-hidden"
+      {/* Carousel Mode */}
+      {carouselMode ? (
+        <div className="py-4">
+          {/* Carousel Container with glow wrapper */}
+          <div className="relative">
+            {/* Glow backdrop - only around the card */}
+            <div 
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-2xl pointer-events-none"
+              style={{ 
+                backgroundColor: '#6156cd',
+                opacity: 0.15,
+                filter: 'blur(15px)'
+              }}
+            />
+            
+            {/* Carousel Container with touch support */}
+            <div 
+              className="overflow-hidden rounded-xl touch-pan-y relative z-10"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
             >
-              {/* Card Header */}
-              <div className="p-6 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-slate-50 dark:from-slate-800 to-white dark:to-slate-800">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                      {project.title}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
-                      <span className="flex items-center gap-1">
-                        <Building2 size={14} className="text-primary-500" />
-                        {project.company}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar size={14} className="text-primary-500" />
-                        {project.year}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-6">
-                <p className={`text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4 ${!isExpanded ? 'line-clamp-2' : ''}`}>
-                  {project.description}
-                </p>
+              <div 
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+              {filteredProjects.map((project) => {
+                const isExpanded = expandedCards[project.id];
                 
-                {project.description.length > 150 && (
-                  <button
-                    onClick={() => toggleCard(project.id)}
-                    className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 flex items-center gap-1 mb-4"
+                return (
+                  <div
+                    key={project.id}
+                    className="w-full flex-shrink-0 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"
                   >
-                    {isExpanded ? 'Show Less' : 'Read More'}
-                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                  </button>
-                )}
-
-                {/* Impact */}
-                {project.impact && (
-                  <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Target size={16} className="text-green-600 dark:text-green-400" />
-                      <span className="text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide">Key Impact</span>
+                    {/* Card Header */}
+                    <div className="p-6 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-slate-50 dark:from-slate-800 to-white dark:to-slate-800">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                            {project.title}
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                            <span className="flex items-center gap-1">
+                              <Building2 size={14} className="text-primary-500" />
+                              {project.company}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Calendar size={14} className="text-primary-500" />
+                              {project.year}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-sm text-green-800 dark:text-green-300 font-medium">
-                      {project.impact}
-                    </p>
-                  </div>
-                )}
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-600"
+                    {/* Card Body */}
+                    <div className="p-6">
+                      <p className={`text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4 ${!isExpanded ? 'line-clamp-3' : ''}`}>
+                        {project.description}
+                      </p>
+                      
+                      {project.description.length > 150 && (
+                        <button
+                          onClick={() => toggleCard(project.id)}
+                          className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 flex items-center gap-1 mb-4"
+                        >
+                          {isExpanded ? 'Show Less' : 'Read More'}
+                          {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        </button>
+                      )}
+
+                      {/* Impact */}
+                      {project.impact && (
+                        <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Target size={16} className="text-green-600 dark:text-green-400" />
+                            <span className="text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide">Key Impact</span>
+                          </div>
+                          <p className="text-sm text-green-800 dark:text-green-300 font-medium">
+                            {project.impact}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-600"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            </div>
+          </div>
+
+          {/* Carousel Navigation */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <button
+              onClick={prevSlide}
+              className="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            
+            {/* Dots */}
+            <div className="flex items-center gap-2">
+              {filteredProjects.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentSlide 
+                      ? 'bg-primary-600 w-6' 
+                      : 'bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500'
+                  }`}
+                />
+              ))}
+            </div>
+            
+            <button
+              onClick={nextSlide}
+              className="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* Grid Mode */
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filteredProjects.map((project) => {
+            const isExpanded = expandedCards[project.id];
+            
+            return (
+              <div
+                key={project.id}
+                className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all overflow-hidden"
+              >
+                {/* Card Header */}
+                <div className="p-6 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-slate-50 dark:from-slate-800 to-white dark:to-slate-800">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                        {project.title}
+                      </h3>
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                        <span className="flex items-center gap-1">
+                          <Building2 size={14} className="text-primary-500" />
+                          {project.company}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Calendar size={14} className="text-primary-500" />
+                          {project.year}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="p-6">
+                  <p className={`text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4 ${!isExpanded ? 'line-clamp-2' : ''}`}>
+                    {project.description}
+                  </p>
+                  
+                  {project.description.length > 150 && (
+                    <button
+                      onClick={() => toggleCard(project.id)}
+                      className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 flex items-center gap-1 mb-4"
                     >
-                      {tag}
-                    </span>
-                  ))}
+                      {isExpanded ? 'Show Less' : 'Read More'}
+                      {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    </button>
+                  )}
+
+                  {/* Impact */}
+                  {project.impact && (
+                    <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Target size={16} className="text-green-600 dark:text-green-400" />
+                        <span className="text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide">Key Impact</span>
+                      </div>
+                      <p className="text-sm text-green-800 dark:text-green-300 font-medium">
+                        {project.impact}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-600"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       {filteredProjects.length === 0 && (
         <div className="text-center py-12">

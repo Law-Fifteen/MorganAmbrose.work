@@ -75,7 +75,20 @@ export default function PerformanceCard() {
   }, 0);
 
   return (
-    <div className="bg-gradient-to-br from-primary-50 dark:from-primary-900/20 to-secondary-50 dark:to-secondary-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-8 mb-8">
+    <div className="relative mb-8">
+      {/* Shape-conforming blue glow */}
+      <div 
+        className="absolute inset-[-15px] rounded-2xl"
+        style={{ 
+          backgroundColor: '#075985',
+          opacity: 0.3,
+          filter: 'blur(14px)',
+          transform: 'scale(1.0)'
+        }}
+      />
+      
+      {/* Card content */}
+      <div className="relative bg-gradient-to-br from-primary-100 dark:from-primary-900/40 to-secondary-100 dark:to-secondary-900/40 rounded-2xl border border-primary-200 dark:border-primary-800 p-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
@@ -228,6 +241,7 @@ export default function PerformanceCard() {
           </div>
         </>
       )}
+      </div>
     </div>
   );
 }

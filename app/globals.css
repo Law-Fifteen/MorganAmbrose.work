@@ -85,6 +85,15 @@
   }
 }
 
+@keyframes rotateGlowPerf {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .hero-button {
   box-shadow: 0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16);
 }

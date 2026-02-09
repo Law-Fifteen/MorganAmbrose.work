@@ -1,38 +1,47 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { professionalProjects, techProjects, summary } from './data';
 import ProfessionalProjectsTable from './components/ProfessionalProjectsTable';
 import TechProjectsTable from './components/TechProjectsTable';
 import PerformanceCard from './components/PerformanceCard';
 import ThemeToggle from './components/ThemeToggle';
-import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar, ArrowUp } from 'lucide-react';
+import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar, ArrowUp, Download, Share2 } from 'lucide-react';
 
 export default function Home() {
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.offsetHeight);
+    }
+  }, []);
+
   return (
     <>
       {/* Navigation */}
-      <nav className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800">
-        <div className="section-container">
-          <div className="flex items-center justify-between h-16">
+      <nav className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md md:sticky md:top-0 z-50 border-b border-slate-200 dark:border-slate-800">
+        <div className="section-container py-4 md:py-0">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between md:h-16 gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-200 dark:border-primary-700 flex-shrink-0">
+              <div className="w-12 h-12 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-primary-200 dark:border-primary-700 flex-shrink-0">
                 <img 
-                  src="https://media.discordapp.net/attachments/331464345789923331/1469437822552506419/6_10ab4d32-a2bc-4ee7-b51b-a3be745a9b781.jpg?ex=6987a81d&is=6986569d&hm=bdc612888bdd618db572245bfcab189be86a395299e6e6a8bcc29c495a4ab025&=&format=webp&width=808&height=807" 
+                  src="/morgan-ambrose-profile-small.png" 
                   alt="Morgan Ambrose Naranjo"
                   className="w-full h-full object-cover object-top"
                 />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-slate-900 dark:text-white">Morgan Ambrose Naranjo</h1>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Sales Leadership & Operations Excellence</p>
+                <h1 className="text-xl md:text-lg font-bold text-slate-900 dark:text-white">Morgan Ambrose Naranjo</h1>
+                <p className="text-sm md:text-xs text-slate-500 dark:text-slate-400">Sales Leadership & Operations Excellence</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-                <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About</a>
-                <a href="#professional" className="text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Professional Work</a>
-                <a href="#tech" className="text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Tech Projects</a>
+              <div className="flex flex-wrap items-center gap-3 md:gap-6 text-sm font-medium">
+                <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors py-2">About</a>
+                <a href="#professional" className="text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors py-2">Professional Work</a>
+                <a href="#tech" className="text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors py-2">Tech Projects</a>
                 <a href="#contact" className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
                   Contact
                 </a>
@@ -43,7 +52,7 @@ export default function Home() {
         </div>
       </nav>
 
-      <main className="pb-20">
+      <main>
         {/* Hero Section */}
         <section className="relative py-20 md:py-32 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary-100 dark:from-primary-900/30 via-white dark:via-slate-900 to-secondary-100 dark:to-secondary-900/30 opacity-50 dark:opacity-20" />
@@ -123,18 +132,18 @@ export default function Home() {
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">About Me</h2>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="space-y-6">
-                  <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg">
+              <div className="grid md:grid-cols-2 gap-8 items-start">
+                <div className="relative" style={{ height: contentHeight ? `${contentHeight}px` : 'auto' }}>
+                  <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg h-full">
                     <img 
-                      src="https://media.discordapp.net/attachments/331464345789923331/1469437829271654491/2_494fd3d4-422f-44dc-9edb-d1978ab2e85711.jpg?ex=6987a81f&is=6986569f&hm=e1c184b968ca61786725c914dac736c7da99586569491ac7aa873f19df270d3d&=&format=webp&width=808&height=808" 
+                      src="/morgan-ambrose-profile-big.png" 
                       alt="Morgan Ambrose Naranjo"
-                      className="w-full h-auto object-cover"
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
                 </div>
                 
-                <div className="space-y-6">
+                <div ref={contentRef} className="space-y-6">
                   <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                     {summary}
                   </p>
@@ -284,10 +293,53 @@ export default function Home() {
   </a>
               </div>
               
-              <div className="mt-12 pt-8 border-t border-white/20">
-                <p className="text-white/70">
-                  Morgan Ambrose Naranjo • Corporate Sales Manager
-                </p>
+              <div className="mt-12 pt-8 border-t border-white/20 flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/Morgan Ambrose - IBS Corporate Sales Manager.pdf"
+                  download
+                  className="inline-flex items-center justify-center gap-2 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 group"
+                  style={{ 
+                    backgroundColor: '#1779c8',
+                    boxShadow: '0 0 15px rgba(255,255,255,0.3), 0 0 30px rgba(255,255,255,0.2)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 0 25px rgba(255,255,255,0.6), 0 0 50px rgba(255,255,255,0.4), 0 0 75px rgba(255,255,255,0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 0 15px rgba(255,255,255,0.3), 0 0 30px rgba(255,255,255,0.2)';
+                  }}
+                >
+                  <Download size={20} />
+                  Download Resume
+                </a>
+                <button
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({
+                        title: 'Morgan Ambrose Naranjo - Corporate Sales Manager',
+                        text: 'Check out this portfolio!',
+                        url: window.location.href,
+                      });
+                    } else {
+                      navigator.clipboard.writeText(window.location.href);
+                      alert('Link copied to clipboard!');
+                    }
+                  }}
+                  className="inline-flex items-center justify-center gap-2 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 group cursor-pointer"
+                  style={{ 
+                    backgroundColor: '#1779c8',
+                    boxShadow: '0 0 15px rgba(255,255,255,0.3), 0 0 30px rgba(255,255,255,0.2)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 0 25px rgba(255,255,255,0.6), 0 0 50px rgba(255,255,255,0.4), 0 0 75px rgba(255,255,255,0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 0 15px rgba(255,255,255,0.3), 0 0 30px rgba(255,255,255,0.2)';
+                  }}
+                >
+                  <Share2 size={20} />
+                  Share Website
+                </button>
               </div>
             </div>
           </div>
@@ -297,7 +349,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-8">
         <div className="section-container">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4">
             <p className="text-sm">
               © {new Date().getFullYear()} Morgan Ambrose Naranjo. All rights reserved.
             </p>
