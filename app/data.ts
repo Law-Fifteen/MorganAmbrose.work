@@ -162,4 +162,4 @@ export const summary = `Sales and Operations Leader with a proven record of buil
 
 Raised on a farm, I learned early the importance of consistency, honest work, personal accountability, and serving something bigger than myself—values that continue to shape how I lead.
 
-I'm trusted with complex initiatives because of sustained top-tier performance and a leadership style grounded in integrity, humility, and stewardship. I believe the strongest results come from cultures built on ownership and genuine care for people—where individuals are developed with intention, supported with clarity, and given the structure to turn strategy into consistent, meaningful execution.`;
+I believe the strongest results come from cultures built on ownership and genuine care for people — where individuals are developed with intention, supported with clarity, and motivated to Succeed.`;

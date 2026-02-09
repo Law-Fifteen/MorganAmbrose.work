@@ -4,7 +4,7 @@ import ProfessionalProjectsTable from './components/ProfessionalProjectsTable';
 import TechProjectsTable from './components/TechProjectsTable';
 import PerformanceCard from './components/PerformanceCard';
 import ThemeToggle from './components/ThemeToggle';
-import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar } from 'lucide-react';
+import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar, ArrowUp } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-lg font-bold text-slate-900 dark:text-white">Morgan Ambrose Naranjo</h1>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Corporate Sales Manager</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Sales Leadership & Operations Excellence</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -62,20 +62,20 @@ export default function Home() {
               
               <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-4xl mx-auto">
                 I enable teams to perform at their peak, even under pressure.<br />
-                Let's work together to strengthen operations and accelerate performance.
+                Currently driving top 2% enterprise results through<br /> disciplined operations and scalable sales strategies.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="#professional"
-                  className="inline-flex items-center justify-center gap-2 border-2 border-primary-600 text-primary-600 dark:text-primary-400 dark:border-primary-400 px-8 py-4 rounded-xl font-semibold hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:shadow-primary-500/50 transition-all duration-300 border-2 border-transparent hover:border-primary-200"
                 >
-                  View my Impact
+                  See Performance Data
                   <ArrowRight size={20} />
                 </a>
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-700 transition-all hover:scale-105"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:shadow-primary-500/50 transition-all duration-300 border-2 border-transparent hover:border-primary-200"
                 >
                   Connect with me for results
                   <ArrowRight size={20} />
@@ -246,13 +246,13 @@ export default function Home() {
                   <Calendar size={20} />
                   Schedule a Meeting
                 </a>
-                <a 
-                  href="tel:+13134667426" 
-                  className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition-all"
-                >
-                  <Phone size={20} />
-                  Contact Me Now
-                </a>
+  <a 
+    href="tel:+13134667426" 
+    className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition-all"
+  >
+    <Phone size={20} />
+    Leave me a Voicemail
+  </a>
               </div>
               
               <div className="mt-12 pt-8 border-t border-white/20">
@@ -281,6 +281,15 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      
+      {/* Back to Top Button */}
+      <a
+        href="#"
+        className="fixed bottom-8 right-8 bg-white/5 backdrop-blur-sm border border-white/20 text-slate-600 dark:text-slate-300 p-4 rounded-full shadow-lg hover:bg-white/10 hover:shadow-xl transition-all duration-300 z-50 group"
+        aria-label="Back to top"
+      >
+        <ArrowUp size={24} className="group-hover:-translate-y-1 transition-transform duration-300" />
+      </a>
     </>
   );
 }

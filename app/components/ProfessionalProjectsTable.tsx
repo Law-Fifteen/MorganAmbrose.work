@@ -78,7 +78,7 @@ export default function ProfessionalProjectsCards({ projects }: ProfessionalProj
 
               {/* Card Body */}
               <div className="p-6">
-                <p className={`text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4 ${!isExpanded ? 'line-clamp-3' : ''}`}>
+                <p className={`text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4 ${!isExpanded ? 'line-clamp-2' : ''}`}>
                   {project.description}
                 </p>
                 
