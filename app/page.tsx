@@ -289,7 +289,7 @@ export default function Home() {
     className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition-all"
   >
     <Phone size={20} />
-    Leave a Voicemail
+    Leave me a Voicemail
   </a>
               </div>
               
