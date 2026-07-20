@@ -60,8 +60,8 @@ export default function Home() {
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.8 }}
+            className="absolute inset-0 w-full h-full object-contain"
+            style={{ opacity: 0.8, maxHeight: '100vh' }}
           >
             <source src="/Conference Background.mp4" type="video/mp4" />
           </video>
@@ -71,11 +71,6 @@ export default function Home() {
           
           <div className="section-container relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 mb-6">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-sm text-slate-700 dark:text-slate-300">Open to Opportunities</span>
-              </div>
-              
               <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
                 Results are earned,<br />
                 Not left to chance<br />
@@ -89,19 +84,19 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="#professional"
-                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-white/90 dark:bg-slate-100/90 text-slate-900 dark:text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
+                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-[#4E1D72] text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
                   style={{
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                    boxShadow: '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)',
                     transition: 'box-shadow 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 0 20px rgba(79,29,114,0.5), 0 0 40px rgba(168,85,247,0.3)';
+                    e.currentTarget.style.boxShadow = '0 0 20px rgba(59,130,246,0.6), 0 0 40px rgba(59,130,246,0.4), 0 0 60px rgba(59,130,246,0.2)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    e.currentTarget.style.boxShadow = '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)';
                   }}
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="absolute inset-0 bg-[#2374c9] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   <span className="relative z-10 flex items-center gap-2">
                     See Performance Data
                     <ArrowRight size={20} />
@@ -109,19 +104,19 @@ export default function Home() {
                 </a>
                 <a
                   href="#contact"
-                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-white/90 dark:bg-slate-100/90 text-slate-900 dark:text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
+                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-[#4E1D72] text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
                   style={{ 
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                    boxShadow: '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)',
                     transition: 'box-shadow 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 0 20px rgba(79,29,114,0.5), 0 0 40px rgba(168,85,247,0.3)';
+                    e.currentTarget.style.boxShadow = '0 0 20px rgba(59,130,246,0.6), 0 0 40px rgba(59,130,246,0.4), 0 0 60px rgba(59,130,246,0.2)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    e.currentTarget.style.boxShadow = '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)';
                   }}
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="absolute inset-0 bg-[#2374c9] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   <span className="relative z-10 flex items-center gap-2">
                     Connect with me for results
                     <ArrowRight size={20} />
