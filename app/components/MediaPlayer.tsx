@@ -197,7 +197,7 @@ export default function MediaPlayer() {
       )}
 
       {/* Floating Player */}
-      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3 overflow-visible">
         {/* Player Panel - Collapsible */}
         <div
           className="overflow-hidden transition-all duration-500 ease-in-out rounded-2xl shadow-2xl"
@@ -289,10 +289,10 @@ export default function MediaPlayer() {
           {/* Music Button + Tooltip wrapper */}
           <div className="relative">
             {showTooltip && !playerOpen && (
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-56 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium px-4 py-3 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 animate-bounce text-center leading-snug" style={{ animationDuration: '2s' }}>
+              <div className="absolute bottom-full right-0 mb-3 w-64 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium px-4 py-3 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 animate-bounce text-left leading-snug" style={{ animationDuration: '2s' }}>
                 Want to listen to my music playlist of the week?<br />
                 <span className="text-primary-600 dark:text-primary-400">It's shuffled, find out what song the universe gives you!</span>
-                <div className="absolute top-full left-1/2 -ml-1.5 -mt-1 w-3 h-3 bg-white dark:bg-slate-800 border-r border-b border-slate-200 dark:border-slate-700 transform rotate-45" />
+                <div className="absolute top-full right-5 -mt-1 w-3 h-3 bg-white dark:bg-slate-800 border-r border-b border-slate-200 dark:border-slate-700 transform rotate-45" />
               </div>
             )}
             <button
