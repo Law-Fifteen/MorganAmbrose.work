@@ -78,7 +78,8 @@ export default function Home() {
               </h1>
               
               <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-4xl mx-auto">
-                Currently driving top 1% enterprise results through disciplined operations and sales strategies.
+                Currently driving top 1% enterprise results<br />
+                through disciplined operations and sales strategies.<br /><br /><br />
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
