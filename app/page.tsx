@@ -54,7 +54,7 @@ export default function Home() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-[85vh] flex items-center overflow-hidden">
+        <section className="relative min-h-[95vh] flex items-center overflow-hidden">
           <video
             autoPlay
             loop
