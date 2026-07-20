@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Shuffle, Volume2, VolumeX, Music, ChevronUp } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Shuffle, Volume2, VolumeX, Music, X, ChevronUp } from 'lucide-react';
 import { songs, Song } from '../songs';
 
 function shuffleArray(arr: Song[]): Song[] {
@@ -20,6 +20,9 @@ function formatTime(sec: number): string {
 }
 
 export default function MediaPlayer() {
+  const [playerOpen, setPlayerOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipDismissed, setTooltipDismissed] = useState(false);
   const [playlist, setPlaylist] = useState<Song[]>(songs);
   const [shuffled, setShuffled] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,6 +44,19 @@ export default function MediaPlayer() {
       setShuffled(true);
     }
   }, [shuffled]);
+
+  // Show tooltip on load, auto-dismiss after 6s
+  useEffect(() => {
+    const showTimer = setTimeout(() => setShowTooltip(true), 1000);
+    const hideTimer = setTimeout(() => {
+      setShowTooltip(false);
+      setTooltipDismissed(true);
+    }, 7000);
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
 
   const playSong = useCallback(() => {
     if (!hasPlayed) {
@@ -137,7 +153,7 @@ export default function MediaPlayer() {
 
   const handleYes = () => {
     setShowPopup(false);
-    const subject = encodeURIComponent(`The universe gave me ${currentSong.title}`);
+    const subject = encodeURIComponent(`The universe gave me ${currentSong.title} by ${currentSong.artist}`);
     window.open(`mailto:MorganAmbrose@proton.me?subject=${subject}`, '_blank');
   };
 
@@ -180,136 +196,126 @@ export default function MediaPlayer() {
         </div>
       )}
 
-      {/* Player - Always Visible */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <div className="w-[380px] bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-[0_0_30px_rgba(78,29,114,0.25)] overflow-hidden flex flex-col">
-          
-          {/* Top Half: Album Art + Controls */}
-          <div className="flex p-4 gap-4 bg-gradient-to-b from-slate-50 dark:from-slate-800 to-white dark:to-slate-900">
-            {/* Left: Album Art */}
-            <div className="w-28 h-28 rounded-xl overflow-hidden flex-shrink-0 border border-slate-200 dark:border-slate-600 shadow-lg">
-              <img
-                src={currentSong.cover}
-                alt={currentSong.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Right: Track Info + Controls */}
-            <div className="flex-1 min-w-0 flex flex-col justify-between">
-              {/* Track Info */}
-              <div className="mb-2">
-                <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{currentSong.title}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{currentSong.artist}</p>
+      {/* Floating Player */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3">
+        {/* Player Panel - Collapsible */}
+        <div
+          className="overflow-hidden transition-all duration-500 ease-in-out rounded-2xl shadow-2xl"
+          style={{
+            height: playerOpen ? '420px' : '0px',
+            opacity: playerOpen ? 1 : 0,
+            width: '380px',
+          }}
+        >
+          <div className="h-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-[0_0_30px_rgba(78,29,114,0.25)] flex flex-col overflow-hidden">
+            {/* Album Art + Controls */}
+            <div className="flex p-4 gap-4 bg-gradient-to-b from-slate-50 dark:from-slate-800 to-white dark:to-slate-900">
+              <div className="w-28 h-28 rounded-xl overflow-hidden flex-shrink-0 border border-slate-200 dark:border-slate-600 shadow-lg">
+                <img src={currentSong.cover} alt={currentSong.title} className="w-full h-full object-cover" />
               </div>
-
-              {/* Progress Bar */}
-              <div
-                ref={progressRef}
-                className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full cursor-pointer group"
-                onClick={handleProgressClick}
-              >
-                <div
-                  className="h-full bg-gradient-to-r from-primary-600 to-secondary-600 rounded-full relative transition-all"
-                  style={{ width: duration ? `${(currentTime / duration) * 100}%` : '0%' }}
-                >
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="flex-1 min-w-0 flex flex-col justify-between">
+                <div className="mb-2">
+                  <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{currentSong.title}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{currentSong.artist}</p>
                 </div>
-              </div>
-              <div className="flex justify-between text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
-                <span>{formatTime(currentTime)}</span>
-                <span>{formatTime(duration)}</span>
-              </div>
-
-              {/* Controls */}
-              <div className="flex items-center justify-between mt-1">
-                <div className="flex items-center gap-2">
-                  <button onClick={() => { setPlaylist(shuffleArray(songs)); setCurrentIndex(0); setCurrentTime(0); }} className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors" title="Shuffle">
-                    <Shuffle size={14} />
-                  </button>
-                  <button onClick={prevSong} className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
-                    <SkipBack size={18} />
-                  </button>
-                  <button
-                    onClick={togglePlay}
-                    className="w-9 h-9 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-full flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-105 transition-all"
-                  >
-                    {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
-                  </button>
-                  <button onClick={nextSong} className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
-                    <SkipForward size={18} />
-                  </button>
+                <div ref={progressRef} className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full cursor-pointer group" onClick={handleProgressClick}>
+                  <div className="h-full bg-gradient-to-r from-primary-600 to-secondary-600 rounded-full relative transition-all" style={{ width: duration ? `${(currentTime / duration) * 100}%` : '0%' }}>
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={toggleMute} className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
-                    {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-                  </button>
-                  <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={isMuted ? 0 : volume}
-                    onChange={(e) => {
-                      const v = parseFloat(e.target.value);
-                      setVolume(v);
-                      setIsMuted(v === 0);
-                      if (audioRef.current) audioRef.current.muted = false;
-                    }}
-                    className="w-16 h-1 appearance-none bg-slate-200 dark:bg-slate-700 rounded-full cursor-pointer accent-primary-600"
-                  />
+                <div className="flex justify-between text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+                  <span>{formatTime(currentTime)}</span>
+                  <span>{formatTime(duration)}</span>
+                </div>
+                <div className="flex items-center justify-between mt-1">
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => { setPlaylist(shuffleArray(songs)); setCurrentIndex(0); setCurrentTime(0); }} className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors" title="Shuffle">
+                      <Shuffle size={14} />
+                    </button>
+                    <button onClick={prevSong} className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+                      <SkipBack size={18} />
+                    </button>
+                    <button onClick={togglePlay} className="w-9 h-9 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-full flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-105 transition-all">
+                      {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
+                    </button>
+                    <button onClick={nextSong} className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+                      <SkipForward size={18} />
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button onClick={toggleMute} className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
+                      {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+                    </button>
+                    <input type="range" min="0" max="1" step="0.01" value={isMuted ? 0 : volume} onChange={(e) => { const v = parseFloat(e.target.value); setVolume(v); setIsMuted(v === 0); if (audioRef.current) audioRef.current.muted = false; }} className="w-16 h-1 appearance-none bg-slate-200 dark:bg-slate-700 rounded-full cursor-pointer accent-primary-600" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Playlist Header */}
-          <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-800">
-            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Playlist ({playlist.length} songs)</span>
-          </div>
+            {/* Playlist Header */}
+            <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-800">
+              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Playlist ({playlist.length} songs)</span>
+            </div>
 
-          {/* Playlist - Always Visible, Invisible Scrollbar */}
-          <div
-            className="overflow-y-auto max-h-[200px]"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
-          >
-            <style>{`.scrollbar-hidden::-webkit-scrollbar { display: none; }`}</style>
-            <div className="px-2 pb-2 scrollbar-hidden">
-              {playlist.map((song, i) => (
-                <button
-                  key={`${song.artist}-${song.title}-${i}`}
-                  onClick={() => goToSong(i)}
-                  className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg text-left transition-colors ${
-                    i === currentIndex
-                      ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                      : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
-                  }`}
-                >
-                  <div className="w-9 h-9 rounded overflow-hidden flex-shrink-0 border border-slate-200 dark:border-slate-700">
-                    <img src={song.cover} alt={song.title} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold truncate">{song.title}</p>
-                    <p className="text-[10px] text-slate-400 dark:text-slate-500 truncate">{song.artist}</p>
-                  </div>
-                  {i === currentIndex && isPlaying && (
-                    <div className="flex gap-0.5 items-end h-3">
-                      <div className="w-0.5 bg-primary-600 animate-bounce" style={{ height: '60%', animationDelay: '0ms' }} />
-                      <div className="w-0.5 bg-primary-600 animate-bounce" style={{ height: '100%', animationDelay: '150ms' }} />
-                      <div className="w-0.5 bg-primary-600 animate-bounce" style={{ height: '40%', animationDelay: '300ms' }} />
+            {/* Playlist */}
+            <div className="overflow-y-auto max-h-[200px]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div className="px-2 pb-2" style={{ scrollbarWidth: 'none' }}>
+                <style>{`.playlist-scroll::-webkit-scrollbar { display: none; }`}</style>
+                {playlist.map((song, i) => (
+                  <button key={`${song.artist}-${song.title}-${i}`} onClick={() => goToSong(i)} className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg text-left transition-colors playlist-scroll ${i === currentIndex ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'}`}>
+                    <div className="w-9 h-9 rounded overflow-hidden flex-shrink-0 border border-slate-200 dark:border-slate-700">
+                      <img src={song.cover} alt={song.title} className="w-full h-full object-cover" />
                     </div>
-                  )}
-                </button>
-              ))}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold truncate">{song.title}</p>
+                      <p className="text-[10px] text-slate-400 dark:text-slate-500 truncate">{song.artist}</p>
+                    </div>
+                    {i === currentIndex && isPlaying && (
+                      <div className="flex gap-0.5 items-end h-3">
+                        <div className="w-0.5 bg-primary-600 animate-bounce" style={{ height: '60%', animationDelay: '0ms' }} />
+                        <div className="w-0.5 bg-primary-600 animate-bounce" style={{ height: '100%', animationDelay: '150ms' }} />
+                        <div className="w-0.5 bg-primary-600 animate-bounce" style={{ height: '40%', animationDelay: '300ms' }} />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Back to Top Button */}
-        <div className="flex justify-end mt-3">
+        {/* Tooltip + Buttons */}
+        <div className="flex items-center gap-3 relative">
+          {/* Tooltip */}
+          {showTooltip && !playerOpen && (
+            <div className="absolute bottom-full right-0 mb-3 whitespace-nowrap bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 animate-bounce" style={{ animationDuration: '2s' }}>
+              Want to listen to my July Playlist?
+              <div className="absolute top-full right-6 -mt-1 w-3 h-3 bg-white dark:bg-slate-800 border-r border-b border-slate-200 dark:border-slate-700 transform rotate-45" />
+            </div>
+          )}
+
+          {/* Music Toggle Button */}
+          <button
+            onClick={() => {
+              setPlayerOpen(!playerOpen);
+              setShowTooltip(false);
+              setTooltipDismissed(true);
+            }}
+            className={`p-4 rounded-full shadow-lg transition-all duration-300 group ${
+              playerOpen
+                ? 'bg-[#4E1D72] text-white shadow-[0_0_20px_rgba(78,29,114,0.5)]'
+                : 'bg-white/5 backdrop-blur-sm border border-white/20 text-slate-600 dark:text-slate-300 hover:bg-white/10 hover:shadow-xl'
+            }`}
+            aria-label={playerOpen ? 'Close music player' : 'Open music player'}
+          >
+            {playerOpen ? (
+              <X size={24} className="group-hover:rotate-90 transition-transform duration-300" />
+            ) : (
+              <Music size={24} className="group-hover:scale-110 transition-transform duration-300" />
+            )}
+          </button>
+
+          {/* Back to Top Button */}
           <a
             href="#"
             className="bg-white/5 backdrop-blur-sm border border-white/20 text-slate-600 dark:text-slate-300 p-4 rounded-full shadow-lg hover:bg-white/10 hover:shadow-xl transition-all duration-300 group"

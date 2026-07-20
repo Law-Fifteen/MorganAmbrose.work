@@ -18,6 +18,7 @@ export const songs: Song[] = [
   { artist: 'Lana Del Rey', title: 'Say Yes To Heaven (Anyma Remix)', src: '/Music/Lana Del Rey - Say Yes To Heaven (Anyma Remix).mp3', cover: '/Music/Lana Del Rey - Say Yes To Heaven (Anyma Remix).avif' },
   { artist: 'Luke Chiang', title: 'Heaven', src: '/Music/Luke Chiang - Heaven.mp3', cover: '/Music/Luke Chiang - Heaven.png' },
   { artist: 'MGMT', title: 'Little Dark Age', src: '/Music/MGMT - Little Dark Age.mp3', cover: '/Music/MGMT - Little Dark Age.jpg' },
+  { artist: 'NF', title: 'HOPE', src: '/Music/NF - HOPE.m4a', cover: '/Music/NF - HOPE.jpg' },
   { artist: 'Sade', title: 'Smooth Operator', src: '/Music/Sade - Smooth Operator.mp3', cover: '/Music/Sade - Smooth Operator.jpg' },
   { artist: 'SHAED', title: 'Trampoline', src: '/Music/SHAED - Trampoline.mp3', cover: '/Music/SHAED - Trampoline.jpg' },
   { artist: 'Stateless', title: 'Bloodstream', src: '/Music/Stateless - Bloodstream.mp3', cover: '/Music/Stateless - Bloodstream.jpg' },
