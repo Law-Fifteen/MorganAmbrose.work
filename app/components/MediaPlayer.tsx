@@ -51,7 +51,7 @@ export default function MediaPlayer() {
     const hideTimer = setTimeout(() => {
       setShowTooltip(false);
       setTooltipDismissed(true);
-    }, 7000);
+    }, 11000);
     return () => {
       clearTimeout(showTimer);
       clearTimeout(hideTimer);
@@ -285,17 +285,17 @@ export default function MediaPlayer() {
         </div>
 
         {/* Tooltip + Buttons */}
-        <div className="flex items-center gap-3 relative">
-          {/* Tooltip */}
-          {showTooltip && !playerOpen && (
-            <div className="absolute bottom-full right-0 mb-3 whitespace-nowrap bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 animate-bounce" style={{ animationDuration: '2s' }}>
-              Want to listen to my July Playlist?
-              <div className="absolute top-full right-6 -mt-1 w-3 h-3 bg-white dark:bg-slate-800 border-r border-b border-slate-200 dark:border-slate-700 transform rotate-45" />
-            </div>
-          )}
-
-          {/* Music Toggle Button */}
-          <button
+        <div className="flex items-center gap-3">
+          {/* Music Button + Tooltip wrapper */}
+          <div className="relative">
+            {showTooltip && !playerOpen && (
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-56 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium px-4 py-3 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 animate-bounce text-center leading-snug" style={{ animationDuration: '2s' }}>
+                Want to listen to my music playlist of the week?<br />
+                <span className="text-primary-600 dark:text-primary-400">It's shuffled, find out what song the universe gives you!</span>
+                <div className="absolute top-full left-1/2 -ml-1.5 -mt-1 w-3 h-3 bg-white dark:bg-slate-800 border-r border-b border-slate-200 dark:border-slate-700 transform rotate-45" />
+              </div>
+            )}
+            <button
             onClick={() => {
               setPlayerOpen(!playerOpen);
               setShowTooltip(false);
@@ -314,6 +314,7 @@ export default function MediaPlayer() {
               <Music size={24} className="group-hover:scale-110 transition-transform duration-300" />
             )}
           </button>
+          </div>
 
           {/* Back to Top Button */}
           <a
