@@ -41,15 +41,20 @@ export default function MediaPlayer() {
 
   const currentSong = playlist[currentIndex];
 
-  // Set up Web Audio API compressor for volume normalization
-  useEffect(() => {
+  // Lazily init Web Audio API on first user interaction
+  const initAudioContext = useCallback(() => {
     const audio = audioRef.current;
-    if (!audio || audioContextRef.current) return;
+    if (!audio || audioContextRef.current) {
+      // Just resume if already created
+      if (audioContextRef.current?.state === 'suspended') {
+        audioContextRef.current.resume();
+      }
+      return;
+    }
 
     const ctx = new AudioContext();
     const compressor = ctx.createDynamicsCompressor();
     
-    // Compressor settings for even volume
     compressor.threshold.value = -20;
     compressor.knee.value = 10;
     compressor.ratio.value = 4;
@@ -63,10 +68,6 @@ export default function MediaPlayer() {
     audioContextRef.current = ctx;
     compressorRef.current = compressor;
     sourceRef.current = source;
-
-    return () => {
-      ctx.close();
-    };
   }, []);
 
   useEffect(() => {
@@ -90,13 +91,14 @@ export default function MediaPlayer() {
   }, []);
 
   const playSong = useCallback(() => {
+    initAudioContext();
     if (!hasPlayed) {
       setHasPlayed(true);
       setShowPopup(true);
     }
     setIsPlaying(true);
     audioRef.current?.play();
-  }, [hasPlayed]);
+  }, [hasPlayed, initAudioContext]);
 
   const pauseSong = useCallback(() => {
     setIsPlaying(false);
@@ -122,6 +124,7 @@ export default function MediaPlayer() {
   }, [playlist.length]);
 
   const goToSong = useCallback((index: number) => {
+    initAudioContext();
     setCurrentIndex(index);
     setCurrentTime(0);
     if (!hasPlayed) {
@@ -129,7 +132,7 @@ export default function MediaPlayer() {
       setShowPopup(true);
     }
     setIsPlaying(true);
-  }, [hasPlayed]);
+  }, [hasPlayed, initAudioContext]);
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!progressRef.current || !audioRef.current) return;
