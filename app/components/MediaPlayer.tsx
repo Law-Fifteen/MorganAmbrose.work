@@ -21,7 +21,8 @@ function formatTime(sec: number): string {
 
 export default function MediaPlayer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [playlist, setPlaylist] = useState<Song[]>(() => shuffleArray(songs));
+  const [playlist, setPlaylist] = useState<Song[]>(songs);
+  const [shuffled, setShuffled] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -35,6 +36,14 @@ export default function MediaPlayer() {
   const progressRef = useRef<HTMLDivElement>(null);
 
   const currentSong = playlist[currentIndex];
+
+  // Shuffle on client mount to avoid hydration mismatch
+  useEffect(() => {
+    if (!shuffled) {
+      setPlaylist(shuffleArray(songs));
+      setShuffled(true);
+    }
+  }, [shuffled]);
 
   const playSong = useCallback(() => {
     if (!hasPlayed) {
