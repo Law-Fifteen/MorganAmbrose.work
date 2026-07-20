@@ -35,8 +35,39 @@ export default function MediaPlayer() {
   const [hasPlayed, setHasPlayed] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const compressorRef = useRef<DynamicsCompressorNode | null>(null);
+  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
 
   const currentSong = playlist[currentIndex];
+
+  // Set up Web Audio API compressor for volume normalization
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || audioContextRef.current) return;
+
+    const ctx = new AudioContext();
+    const compressor = ctx.createDynamicsCompressor();
+    
+    // Compressor settings for even volume
+    compressor.threshold.value = -20;
+    compressor.knee.value = 10;
+    compressor.ratio.value = 4;
+    compressor.attack.value = 0.003;
+    compressor.release.value = 0.25;
+
+    const source = ctx.createMediaElementSource(audio);
+    source.connect(compressor);
+    compressor.connect(ctx.destination);
+
+    audioContextRef.current = ctx;
+    compressorRef.current = compressor;
+    sourceRef.current = source;
+
+    return () => {
+      ctx.close();
+    };
+  }, []);
 
   useEffect(() => {
     if (!shuffled) {
