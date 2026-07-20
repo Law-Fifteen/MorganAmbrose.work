@@ -105,24 +105,28 @@ export const techProjects: TechProject[] = [
     title: 'Baird Foundation Repair — Sales Enablement LMS',
     description: 'A field sales enablement platform designed to train foundation repair consultants through structured learning paths, customer psychology frameworks, discovery methodologies, objection handling systems, and performance improvement workflows.\n\nBuilt to bridge the gap between technical expertise and sales execution by creating a guided learning environment where representatives understand not only what to say, but why each action drives customer confidence and conversion.\n\nDesigned with gamified progression, interactive modules, and real-world sales scenarios to accelerate onboarding and improve field performance.',
     technologies: ['HTML/CSS', 'JavaScript', 'Learning Management Systems', 'Sales Training Architecture', 'Interactive UX', 'Gamification', 'Process Documentation'],
+    link: 'https://baird.morganambrose.work/',
   },
   {
     id: '3',
     title: 'COGO — Sales Enablement LMS',
     description: 'A customized learning management system built to organize sales knowledge, operational workflows, and customer engagement strategies into an intuitive field reference experience.\n\nDesigned around the principle of reducing cognitive load for sales teams by transforming complex processes into simple decision frameworks, guided workflows, and actionable playbooks.\n\nCreated to support faster onboarding, consistent execution, and continuous improvement across revenue teams.',
     technologies: ['LMS Architecture', 'Sales Enablement', 'Knowledge Systems', 'Interactive Documentation', 'UX Design', 'Workflow Design'],
+    link: 'https://training.morganambrose.work/',
   },
   {
     id: '4',
     title: 'MD7 — Sales Intelligence & Enablement Platform',
     description: 'A comprehensive sales enablement ecosystem designed to support complex B2B sales motions through structured discovery, account qualification, pipeline management, and rep performance improvement.\n\nBuilt using principles from modern revenue operations and Qualified Sales Leader methodology, the system creates visibility into deal progression while providing representatives with repeatable frameworks to improve customer conversations.\n\nDesigned to connect strategy, execution, and measurement into a unified sales operating model.',
     technologies: ['Sales Operations', 'CRM Design', 'Pipeline Intelligence', 'Revenue Analytics', 'Enablement Systems', 'Process Automation'],
+    link: 'https://md7.morganambrose.work/',
   },
   {
     id: '5',
     title: 'Happy Trailers — Sales Playbook & Training System',
     description: 'A dealership sales enablement platform designed to transform product knowledge, customer interactions, and operational processes into a repeatable sales methodology.\n\nBuilt around customer journey mapping, ideal customer profiles, discovery frameworks, objection handling systems, and "If This Then That" decision paths.\n\nCreated to help sales teams understand buyer motivations, improve consultation quality, and develop consistent high-performing behaviors.',
     technologies: ['Sales Playbooks', 'Customer Journey Mapping', 'Training Systems', 'Interactive UX', 'CRM Workflows', 'Performance Coaching'],
+    link: 'https://happy-trailers.morganambrose.work/',
   },
   {
     id: '6',
