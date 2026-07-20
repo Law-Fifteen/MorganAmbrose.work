@@ -11,6 +11,7 @@ import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar, ArrowUp, Dow
 export default function Home() {
   const [contentHeight, setContentHeight] = useState<number | null>(null);
   const [spotifyOpen, setSpotifyOpen] = useState(false);
+  const [playVideo, setPlayVideo] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -264,6 +265,52 @@ export default function Home() {
               </div>
               
               <TechProjectsTable projects={techProjects} />
+            </div>
+          </div>
+        </section>
+
+        {/* Intro Video Section */}
+        <section className="py-16 bg-slate-50 dark:bg-slate-950">
+          <div className="section-container">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Quick Introduction</h2>
+              </div>
+              <p className="text-slate-600 dark:text-slate-400 mb-8">
+                Take a minute to learn about who I am and what drives my approach.
+              </p>
+              
+              <div 
+                className="relative cursor-pointer group rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-700 max-w-2xl mx-auto"
+                onClick={() => setPlayVideo(true)}
+              >
+                {!playVideo ? (
+                  <>
+                    <img 
+                      src="/Intro Video.png" 
+                      alt="Morgan Ambrose Introduction Video"
+                      className="w-full h-auto"
+                    />
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                      <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-0 h-0 border-t-[14px] border-t-transparent border-b-[14px] border-b-transparent border-l-[24px] border-l-primary-600 ml-2" />
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      src="https://www.youtube-nocookie.com/embed/xn2e-qaYleQ?si=fm4kLZ_1FgTSWH3y&autoplay=1"
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </section>
