@@ -54,14 +54,14 @@ export default function Home() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 md:py-32 overflow-hidden">
+        <section className="relative min-h-[85vh] flex items-center overflow-hidden">
           <video
             autoPlay
             loop
             muted
             playsInline
             className="absolute inset-0 w-full h-full object-contain"
-            style={{ opacity: 0.8, maxHeight: '100vh' }}
+            style={{ opacity: 0.8 }}
           >
             <source src="/Conference Background.mp4" type="video/mp4" />
           </video>
