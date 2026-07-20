@@ -96,35 +96,77 @@ export const professionalProjects: Project[] = [
 export const techProjects: TechProject[] = [
   {
     id: '1',
+    title: 'CommerceOS',
+    description: 'An enterprise-grade sales operating system designed to unify revenue strategy, enablement, execution, and performance intelligence into a single operating framework.\n\nBuilt around Qualified Sales Leader exit gates, CommerceOS transforms traditional sales processes into measurable systems by connecting buyer psychology, discovery methodology, rep behaviors, pipeline progression, coaching workflows, and operational analytics.\n\nDesigned to function as a scalable revenue enablement platform for organizations seeking repeatable sales excellence.',
+    technologies: ['Revenue Operations', 'Sales Enablement Systems', 'CRM Architecture', 'Workflow Automation', 'Performance Analytics', 'UX Design', 'Knowledge Management', 'AI-Assisted Operations'],
+  },
+  {
+    id: '2',
+    title: 'Baird Foundation Repair — Sales Enablement LMS',
+    description: 'A field sales enablement platform designed to train foundation repair consultants through structured learning paths, customer psychology frameworks, discovery methodologies, objection handling systems, and performance improvement workflows.\n\nBuilt to bridge the gap between technical expertise and sales execution by creating a guided learning environment where representatives understand not only what to say, but why each action drives customer confidence and conversion.\n\nDesigned with gamified progression, interactive modules, and real-world sales scenarios to accelerate onboarding and improve field performance.',
+    technologies: ['HTML/CSS', 'JavaScript', 'Learning Management Systems', 'Sales Training Architecture', 'Interactive UX', 'Gamification', 'Process Documentation'],
+  },
+  {
+    id: '3',
+    title: 'COGO — Sales Enablement LMS',
+    description: 'A customized learning management system built to organize sales knowledge, operational workflows, and customer engagement strategies into an intuitive field reference experience.\n\nDesigned around the principle of reducing cognitive load for sales teams by transforming complex processes into simple decision frameworks, guided workflows, and actionable playbooks.\n\nCreated to support faster onboarding, consistent execution, and continuous improvement across revenue teams.',
+    technologies: ['LMS Architecture', 'Sales Enablement', 'Knowledge Systems', 'Interactive Documentation', 'UX Design', 'Workflow Design'],
+  },
+  {
+    id: '4',
+    title: 'MD7 — Sales Intelligence & Enablement Platform',
+    description: 'A comprehensive sales enablement ecosystem designed to support complex B2B sales motions through structured discovery, account qualification, pipeline management, and rep performance improvement.\n\nBuilt using principles from modern revenue operations and Qualified Sales Leader methodology, the system creates visibility into deal progression while providing representatives with repeatable frameworks to improve customer conversations.\n\nDesigned to connect strategy, execution, and measurement into a unified sales operating model.',
+    technologies: ['Sales Operations', 'CRM Design', 'Pipeline Intelligence', 'Revenue Analytics', 'Enablement Systems', 'Process Automation'],
+  },
+  {
+    id: '5',
+    title: 'Happy Trailers — Sales Playbook & Training System',
+    description: 'A dealership sales enablement platform designed to transform product knowledge, customer interactions, and operational processes into a repeatable sales methodology.\n\nBuilt around customer journey mapping, ideal customer profiles, discovery frameworks, objection handling systems, and "If This Then That" decision paths.\n\nCreated to help sales teams understand buyer motivations, improve consultation quality, and develop consistent high-performing behaviors.',
+    technologies: ['Sales Playbooks', 'Customer Journey Mapping', 'Training Systems', 'Interactive UX', 'CRM Workflows', 'Performance Coaching'],
+  },
+  {
+    id: '6',
+    title: 'MeetingAI',
+    description: 'A local AI-powered meeting intelligence system designed to capture, transcribe, analyze, and extract actionable insights from sales conversations.\n\nBuilt to transform unstructured conversations into structured intelligence by identifying customer sentiment, discovery quality, objections, coaching opportunities, and follow-up actions.\n\nDesigned with privacy-focused local processing and customizable analysis workflows.',
+    technologies: ['AI/ML', 'Speech Recognition', 'Local AI Processing', 'Whisper Models', 'Conversation Intelligence', 'Data Analysis', 'Automation'],
+  },
+  {
+    id: '7',
+    title: 'Internal Gong Alternative — Conversation Intelligence Platform',
+    description: 'A proprietary conversation intelligence system built to analyze sales interactions, identify coaching opportunities, and improve representative performance without relying on external platforms.\n\nDesigned to evaluate discovery quality, objection handling, positioning accuracy, and adherence to sales methodology through structured conversation analysis.\n\nBuilt as an internal revenue intelligence layer connecting customer interactions with coaching and enablement.',
+    technologies: ['Conversation Intelligence', 'AI Analysis', 'Sales Coaching', 'Speech Analytics', 'Revenue Operations', 'Performance Measurement'],
+  },
+  {
+    id: '8',
+    title: 'Revenue Performance Dashboards',
+    description: 'A collection of internal real-time analytics dashboards designed to provide leadership visibility into sales execution, operational health, and revenue performance.\n\nBuilt to monitor conversion trends, activity metrics, pipeline movement, representative performance, and key business indicators through dynamic reporting environments.\n\nDesigned to replace reactive reporting with proactive decision-making.',
+    technologies: ['Data Visualization', 'Business Intelligence', 'Real-Time Analytics', 'Dashboard Architecture', 'KPI Development', 'Revenue Operations'],
+  },
+  {
+    id: '9',
+    title: 'Real-Time Sales Performance Tracking System',
+    description: 'A live performance monitoring platform designed to provide immediate visibility into sales team execution and business outcomes.\n\nBuilt around operational metrics including conversion rates, revenue attainment, pipeline progression, activity performance, and coaching indicators.\n\nCreated to help sales leaders identify trends, diagnose performance gaps, and make faster operational decisions.',
+    technologies: ['Real-Time Data Systems', 'Performance Analytics', 'Sales Operations', 'KPI Frameworks', 'Dashboard Development', 'Data Modeling'],
+  },
+  {
+    id: '10',
+    title: 'Qualified Sales Leader CRM Framework',
+    description: 'A custom CRM architecture designed around Qualified Sales Leader exit gates, replacing activity-based tracking with outcome-driven qualification and deal progression.\n\nBuilt to guide representatives through structured customer journeys by measuring critical milestones including problem validation, impact alignment, solution fit, decision process, and commitment.\n\nDesigned to create cleaner pipelines, stronger forecasting, and more predictable revenue outcomes.',
+    technologies: ['CRM Architecture', 'Sales Methodology', 'Pipeline Management', 'Qualification Frameworks', 'Workflow Automation', 'Revenue Operations'],
+  },
+  {
+    id: '11',
+    title: 'AI Agent Assist System — Charter Communications',
+    description: 'AI-powered agent assist tools leveraging custom knowledge bases and proprietary training methodologies to improve customer interactions and frontline decision-making.\n\nBuilt to train AI systems through structured exposure to sales playbooks, rebuttal frameworks, and operational knowledge, enabling agents to respond more effectively while reducing inconsistency.\n\nDesigned as a bridge between human expertise and scalable AI assistance.',
+    technologies: ['AI/ML', 'Knowledge Management', 'Agent Assist', 'Custom Training Systems', 'Sales Enablement', 'Automation'],
+  },
+  {
+    id: '12',
     title: 'Going Deep with Morgan',
-    year: 2025,
     description: 'A personal introspection project featuring a card-based conversation game designed to facilitate deeper connections and self-reflection.\n\nBuilt with a focus on user experience and meaningful interaction design.',
     technologies: ['JavaScript', 'HTML/CSS', 'UX Design', 'Interactive Media'],
     link: 'https://going-deep.tmcb.tech/',
   },
-  {
-    id: '2',
-    title: 'Square Enix - Realtime Game Database',
-    year: 2015,
-    description: 'Designed and deployed a realtime database system capable of handling thousands of concurrent requests to pull from a games card data and deploy to Discord. Built for enterprise-scale usage with high availability and performance requirements.',
-    technologies: ['Realtime Database', 'Discord API', 'High Availability', 'Node.js', 'Redis'],
-  },
-  {
-    id: '3',
-    title: 'Charter Communications - AI Agent Assist',
-    year: 2025,
-    description: 'AI Powered agent assist tools leveraging custom knowledgebases built with proprietary methodology to train agents to use my "playbook" through repetition and exposure. Agents learn to handle rebuttals effectively without being caught off guard.',
-    technologies: ['AI/ML', 'Knowledge Management', 'Training Systems', 'Agent Assist', 'Custom Playbook'],
-  },
-  {
-    id: '4',
-    title: 'Portfolio Website',
-    year: 2026,
-    description: 'This personal portfolio website built with Next.js, Tailwind CSS, and TanStack Table. Features professional project showcases, tech projects, and interactive resume sections with modern responsive design.',
-    technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'TanStack Table'],
-    link: '#',
-    github: '#',
-  }
 ];
 
 export const skills = [

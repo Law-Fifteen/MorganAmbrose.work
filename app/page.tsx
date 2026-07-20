@@ -55,7 +55,17 @@ export default function Home() {
       <main>
         {/* Hero Section */}
         <section className="relative py-20 md:py-32 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-100 dark:from-primary-900/30 via-white dark:via-slate-900 to-secondary-100 dark:to-secondary-900/30 opacity-50 dark:opacity-20" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: 0.8 }}
+          >
+            <source src="/Conference Background.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-100/80 dark:from-primary-900/60 via-white/70 dark:via-slate-900/80 to-secondary-100/80 dark:to-secondary-900/60" />
           <div className="absolute top-20 right-10 w-72 h-72 bg-primary-200 dark:bg-primary-700/30 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" />
           <div className="absolute bottom-20 left-10 w-72 h-72 bg-secondary-200 dark:bg-secondary-700/30 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" />
           
@@ -73,26 +83,25 @@ export default function Home() {
               </h1>
               
               <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-4xl mx-auto">
-                I enable teams to perform at their peak, even under pressure.<br />
-                Currently driving top 2% enterprise results through<br /> disciplined operations and scalable sales strategies.
+                Currently driving top 1% enterprise results through disciplined operations and sales strategies.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="#professional"
-                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-[#4E1D72] text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
+                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-white/90 dark:bg-slate-100/90 text-slate-900 dark:text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
                   style={{
-                    boxShadow: '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                     transition: 'box-shadow 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 0 20px rgba(59,130,246,0.6), 0 0 40px rgba(59,130,246,0.4), 0 0 60px rgba(59,130,246,0.2)';
+                    e.currentTarget.style.boxShadow = '0 0 20px rgba(79,29,114,0.5), 0 0 40px rgba(168,85,247,0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)';
+                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
                   }}
                 >
-                  <span className="absolute inset-0 bg-[#2374c9] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   <span className="relative z-10 flex items-center gap-2">
                     See Performance Data
                     <ArrowRight size={20} />
@@ -100,19 +109,19 @@ export default function Home() {
                 </a>
                 <a
                   href="#contact"
-                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-[#4E1D72] text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
+                  className="hero-btn group inline-flex items-center justify-center gap-2 bg-white/90 dark:bg-slate-100/90 text-slate-900 dark:text-white px-8 py-4 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 hover:scale-105"
                   style={{ 
-                    boxShadow: '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                     transition: 'box-shadow 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 0 20px rgba(59,130,246,0.6), 0 0 40px rgba(59,130,246,0.4), 0 0 60px rgba(59,130,246,0.2)';
+                    e.currentTarget.style.boxShadow = '0 0 20px rgba(79,29,114,0.5), 0 0 40px rgba(168,85,247,0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 0 10px rgba(59,130,246,0.32), 0 0 20px rgba(59,130,246,0.16)';
+                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
                   }}
                 >
-                  <span className="absolute inset-0 bg-[#2374c9] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-secondary-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   <span className="relative z-10 flex items-center gap-2">
                     Connect with me for results
                     <ArrowRight size={20} />
@@ -295,7 +304,7 @@ export default function Home() {
               
               <div className="mt-12 pt-8 border-t border-white/20 flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="/Morgan Ambrose - IBS Corporate Sales Manager.pdf"
+                  href="/Ambrose Morgan -- Resume.docx"
                   download
                   className="inline-flex items-center justify-center gap-2 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 group"
                   style={{ 

@@ -50,10 +50,12 @@ export default function TechProjectsCards({ projects }: TechProjectsCardsProps) 
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                     {project.title}
                   </h3>
-                  <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                    <Calendar size={14} className="text-secondary-500" />
-                    {project.year}
-                  </div>
+                  {project.year && (
+                    <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                      <Calendar size={14} className="text-secondary-500" />
+                      {project.year}
+                    </div>
+                  )}
                 </div>
                 
                 {/* Action Buttons */}

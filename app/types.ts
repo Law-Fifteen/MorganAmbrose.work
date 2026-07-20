@@ -12,7 +12,7 @@ export interface Project {
 export interface TechProject {
   id: string;
   title: string;
-  year: number;
+  year?: number;
   description: string;
   technologies: string[];
   link?: string;
