@@ -150,8 +150,8 @@ export const techProjects: TechProject[] = [
   },
   {
     id: '10',
-    title: 'Qualified Sales Leader CRM Framework',
-    description: 'A custom CRM architecture designed around Qualified Sales Leader exit gates, replacing activity-based tracking with outcome-driven qualification and deal progression.\n\nBuilt to guide representatives through structured customer journeys by measuring critical milestones including problem validation, impact alignment, solution fit, decision process, and commitment.\n\nDesigned to create cleaner pipelines, stronger forecasting, and more predictable revenue outcomes.',
+    title: 'Qualified Sales CRM Framework',
+    description: 'A custom CRM architecture designed around outcome-driven exit gates, replacing activity-based tracking with outcome-driven qualification and deal progression.\n\nBuilt to guide representatives through structured customer journeys by measuring critical milestones including problem validation, impact alignment, solution fit, decision process, and commitment.\n\nDesigned to create cleaner pipelines, stronger forecasting, and more predictable revenue outcomes.',
     technologies: ['CRM Architecture', 'Sales Methodology', 'Pipeline Management', 'Qualification Frameworks', 'Workflow Automation', 'Revenue Operations'],
   },
   {
