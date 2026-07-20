@@ -164,23 +164,29 @@ export default function Home() {
                     <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">1</span>
                     </div>
-                    <span className="text-slate-700 dark:text-slate-300">Led team of 24 to top 10 enterprise ranking (14 of 16 months)</span>
+                    <span className="text-slate-700 dark:text-slate-300">Scaled revenue from 5.6M to 22.1M in 2025</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">2</span>
                     </div>
-                    <span className="text-slate-700 dark:text-slate-300">Managed $8M+ in revenue retention through crisis management</span>
+                    <span className="text-slate-700 dark:text-slate-300">Led team of 24 to top 10 enterprise ranking (14 of 16 months)</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">3</span>
                     </div>
-                    <span className="text-slate-700 dark:text-slate-300">Built AI-driven tools accelerating sales decision cycles</span>
+                    <span className="text-slate-700 dark:text-slate-300">Managed $8M+ in revenue retention through crisis management</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">4</span>
+                    </div>
+                    <span className="text-slate-700 dark:text-slate-300">Built AI-driven tools accelerating sales decision cycles</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-primary-600 dark:text-primary-300 text-sm font-bold">5</span>
                     </div>
                     <span className="text-slate-700 dark:text-slate-300">Created training programs resulting in $2.66M average ARR growth</span>
                   </li>
