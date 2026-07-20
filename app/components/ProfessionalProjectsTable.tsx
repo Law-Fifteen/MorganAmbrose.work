@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Project } from '../types';
-import { Search, ChevronDown, ChevronUp, Building2, Calendar, Target, ChevronLeft, ChevronRight, LayoutGrid, GalleryHorizontal } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, Building2, Target, ChevronLeft, ChevronRight, LayoutGrid, GalleryHorizontal } from 'lucide-react';
 
 interface ProfessionalProjectsCardsProps {
   projects: Project[];
@@ -176,10 +176,6 @@ export default function ProfessionalProjectsCards({ projects }: ProfessionalProj
                               <Building2 size={14} className="text-primary-500" />
                               {project.company}
                             </span>
-                            <span className="flex items-center gap-1">
-                              <Calendar size={14} className="text-primary-500" />
-                              {project.year}
-                            </span>
                           </div>
                         </div>
                       </div>
@@ -287,10 +283,6 @@ export default function ProfessionalProjectsCards({ projects }: ProfessionalProj
                         <span className="flex items-center gap-1">
                           <Building2 size={14} className="text-primary-500" />
                           {project.company}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14} className="text-primary-500" />
-                          {project.year}
                         </span>
                       </div>
                     </div>
