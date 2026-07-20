@@ -6,10 +6,11 @@ import ProfessionalProjectsTable from './components/ProfessionalProjectsTable';
 import TechProjectsTable from './components/TechProjectsTable';
 import PerformanceCard from './components/PerformanceCard';
 import ThemeToggle from './components/ThemeToggle';
-import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar, ArrowUp, Download, Share2 } from 'lucide-react';
+import { Briefcase, Code2, User, Mail, ArrowRight, Phone, Calendar, ArrowUp, Download, Share2, Music, X } from 'lucide-react';
 
 export default function Home() {
   const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const [spotifyOpen, setSpotifyOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -376,14 +377,60 @@ export default function Home() {
         </div>
       </footer>
       
-      {/* Back to Top Button */}
-      <a
-        href="#"
-        className="fixed bottom-8 right-8 bg-white/5 backdrop-blur-sm border border-white/20 text-slate-600 dark:text-slate-300 p-4 rounded-full shadow-lg hover:bg-white/10 hover:shadow-xl transition-all duration-300 z-50 group"
-        aria-label="Back to top"
-      >
-        <ArrowUp size={24} className="group-hover:-translate-y-1 transition-transform duration-300" />
-      </a>
+      {/* Floating Spotify Player + Back to Top */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3">
+        {/* Spotify Embed Panel */}
+        <div 
+          className="overflow-hidden transition-all duration-500 ease-in-out rounded-xl shadow-2xl"
+          style={{ 
+            height: spotifyOpen ? '160px' : '0px',
+            opacity: spotifyOpen ? 1 : 0,
+            width: '320px'
+          }}
+        >
+          <div className="relative h-full rounded-xl overflow-hidden border border-purple-500/30 shadow-[0_0_20px_rgba(78,29,114,0.3)]">
+            <iframe
+              src="https://open.spotify.com/embed/playlist/683jFwhCNlxOuT4WVuQSSE?utm_source=generator&si=b7e1209cb6244883&autoplay=1"
+              width="100%"
+              height="152"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="rounded-xl"
+              style={{ borderRadius: '12px' }}
+            />
+          </div>
+        </div>
+
+        {/* Button Row */}
+        <div className="flex items-center gap-3">
+          {/* Spotify Toggle Button */}
+          <button
+            onClick={() => setSpotifyOpen(!spotifyOpen)}
+            className={`p-4 rounded-full shadow-lg transition-all duration-300 group ${
+              spotifyOpen 
+                ? 'bg-[#4E1D72] text-white shadow-[0_0_20px_rgba(78,29,114,0.5)]' 
+                : 'bg-white/5 backdrop-blur-sm border border-white/20 text-slate-600 dark:text-slate-300 hover:bg-white/10 hover:shadow-xl'
+            }`}
+            aria-label={spotifyOpen ? 'Close music player' : 'Open music player'}
+          >
+            {spotifyOpen ? (
+              <X size={24} className="group-hover:rotate-90 transition-transform duration-300" />
+            ) : (
+              <Music size={24} className="group-hover:scale-110 transition-transform duration-300" />
+            )}
+          </button>
+
+          {/* Back to Top Button */}
+          <a
+            href="#"
+            className="bg-white/5 backdrop-blur-sm border border-white/20 text-slate-600 dark:text-slate-300 p-4 rounded-full shadow-lg hover:bg-white/10 hover:shadow-xl transition-all duration-300 group"
+            aria-label="Back to top"
+          >
+            <ArrowUp size={24} className="group-hover:-translate-y-1 transition-transform duration-300" />
+          </a>
+        </div>
+      </div>
     </>
   );
 }
